@@ -77,19 +77,21 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement receive function in Notification controller.`
     -   [x] Commit: `Implement list_messages function in Notification service.`
     -   [x] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
 
 ### Mandatory (Subscriber) Reflections
 
-In this tutorial, we used RwLock<> to synchronise the use of Vec of Notifications. Explain why it is necessary for this case, and explain why we do not use Mutex<> instead?
-
-In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?
 #### Reflection Subscriber-1
 **Why RwLock instead of Mutex on Vec of Notifications?** -- RwLock is used instead of Mutex because it allows multiple threads to read notifications concurrently while still ensuring exclusive access during writes. This is suitable for scenarios where there are many reads and occasional writes. Mutex can also be used, but it might not provide the same level of concurrency and scalability in read-heavy workloads.
 
 **Why Rust doesn't allow mutation the content of static variable via a static function?** -- Rust emphasizes thread safety, and mutable static variables can introduce issues like data races if not handled carefully. Mutable static variables also don't fit Rust's ownership and borrowing system because they are accessible globally and can potentially be modified anywhere in the program. It also don't fit the predictable initialization since static variables are supposed to be initialized once and in a predictable manner, even in presence of concurrency. 
 
 #### Reflection Subscriber-2
+**Exploration outside the steps of tutorial** -- I have explored things outside the tutorial, which is the other library that I want to use for the group assignment, Actix. The reason is because from the benchmarks, Actix is better and it is more maintained than Rocket. Rocket has been dropped from the "hall of fame" for Rust because of the lack of maintenance for the past few months.
+
+**How observer pattern ease to plug in more subscribers?** -- observer pattern simplifies the process because it use a decoupled architecture where the subject doesn't need to know specific types of it's subscribers. This allows new subscribers to be added to the system without modifying subject, promoting code maintainability and scalability. Receiver can also notify all subscriber instances simultaneously without any additional complexity or changes to the Observer implementation. Subscribers can also define their own behavior for handling notifications, allowing for customization and adaptation to different requiremets or use cases.
+
+**Is the self made tests useful?** -- of course they are useful. Generating fake test data is quite useful if I don't want to hard code the dummy data that I want to use.
