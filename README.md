@@ -59,14 +59,14 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   Open another new terminal, edit `ROCKET_PORT` in `.env` to `8003`, then execute `cargo run`.
 
 ## Mandatory Checklists (Subscriber)
--   [ ] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
+-   [x] Clone https://gitlab.com/ichlaffterlalu/bambangshop-receiver to a new repository.
 -   **STAGE 1: Implement models and repositories**
     -   [x] Commit: `Create Notification model struct.`
     -   [x] Commit: `Create SubscriberRequest model struct.`
     -   [x] Commit: `Create Notification database and Notification repository struct skeleton.`
     -   [x] Commit: `Implement add function in Notification repository.`
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+    -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
     -   [ ] Commit: `Create Notification service struct skeleton.`
     -   [ ] Commit: `Implement subscribe function in Notification service.`
@@ -84,6 +84,12 @@ This is the place for you to write reflections:
 
 ### Mandatory (Subscriber) Reflections
 
+In this tutorial, we used RwLock<> to synchronise the use of Vec of Notifications. Explain why it is necessary for this case, and explain why we do not use Mutex<> instead?
+
+In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?
 #### Reflection Subscriber-1
+**Why RwLock instead of Mutex on Vec of Notifications?** -- RwLock is used instead of Mutex because it allows multiple threads to read notifications concurrently while still ensuring exclusive access during writes. This is suitable for scenarios where there are many reads and occasional writes. Mutex can also be used, but it might not provide the same level of concurrency and scalability in read-heavy workloads.
+
+**Why Rust doesn't allow mutation the content of static variable via a static function?** -- Rust emphasizes thread safety, and mutable static variables can introduce issues like data races if not handled carefully. Mutable static variables also don't fit Rust's ownership and borrowing system because they are accessible globally and can potentially be modified anywhere in the program. It also don't fit the predictable initialization since static variables are supposed to be initialized once and in a predictable manner, even in presence of concurrency. 
 
 #### Reflection Subscriber-2
